@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
     
     var collectionData = ["1","2","3","4","5","6","7","8","9","10","11","12"]
+    var selectedCollection: String!
+    
     @IBOutlet weak var collectionview: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,23 @@ extension ViewController: UICollectionViewDataSource , UICollectionViewDelegate 
         return CGSize(width: width, height: width)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(collectionData[indexPath.row])")
+        selectedCollection = collectionData[indexPath.row]
+        performSegue(withIdentifier: "detailsegue", sender: indexPath)
+        
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier ==  "detailsegue" {
+//           if let destination = segue.destination as? DetailsVC ,
+//            let index = sender as? IndexPath {
+//            destination.selectedItem = collectionData[index.row]
+//            }
+//
+//        }
+   
+        if segue.identifier == "detailsegue"{
+            let destination = segue.destination as! DetailsVC
+            destination.selectedItem = selectedCollection
+        }
+        
+    }
 }
