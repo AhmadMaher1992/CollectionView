@@ -18,8 +18,20 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
     }
+    
 
-
+    @IBAction func addItem(_ sender: Any) {
+        collectionview.performBatchUpdates({
+            for _ in 0 ..< 2 {
+                let text = "\(collectionData.count + 1)"
+                collectionData.append(text)
+                let index = IndexPath(row: collectionData.count - 1, section: 0)
+                collectionview.insertItems(at: [index])
+            }
+        }, completion: nil)
+        
+    }
+    
 }
 extension ViewController: UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -34,7 +46,7 @@ extension ViewController: UICollectionViewDataSource , UICollectionViewDelegate 
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (view.frame.size.width - 40) / 5
+        let width = (view.frame.size.width - 20) / 3
         return CGSize(width: width, height: width)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
